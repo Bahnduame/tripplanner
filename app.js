@@ -18,6 +18,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
 app.engine('html', swig.renderFile);
 
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
