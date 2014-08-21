@@ -17,8 +17,8 @@
             <h3 class="">Hotels</h3>
         </div>
         <div class="row">
-            <select class="form-control col-lg-1 dropdown-selector" id="hotel-dropdown"></select>
-            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
+            <select class="form-control col-lg-1 dropdown-selector" id="hotel-select"></select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit" id="add-hotel">Add</button>
         </div>
     </div>
 
@@ -29,8 +29,8 @@
             <h3 class="">Things to do</h3>
         </div>
        <div class="row">
-            <select class="form-control col-lg-1 dropdown-selector" id="thing-dropdown"></select>
-            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
+            <select class="form-control col-lg-1 dropdown-selector" id="thing-select"></select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit" id="add-thing">Add</button>
         </div>
     </div>
 
@@ -41,8 +41,8 @@
             <h3 class="">Restaurants</h3>
         </div>
         <div class="row">
-            <select class="form-control col-lg-1 dropdown-selector" id="restaurant-dropdown"></select>
-            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
+            <select class="form-control col-lg-1 dropdown-selector" id="restaurant-select"></select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit" id="add-restaurant">Add</button>
         </div>
     </div>
 
@@ -56,19 +56,13 @@
         <h3>Plan for Day 1</h3>
         <ul>
             <li>Hotel</li>
-            <ul>
-                <li>Paul is</li>
-                <li>a DoucheNozzle</li>
+            <ul id="hotels-ul">
             </ul>
             <li>Things to Do</li>
-                <ul>
-                    <li>Paul is</li>
-                    <li>a DoucheNozzle</li>
+                <ul id="things-ul">
                 </ul>
             <li>Restaurants</li>
-                <ul>
-                    <li>Paul is</li>
-                    <li>a DoucheNozzle</li>
+                <ul id="restaurants-ul">
                 </ul>
         </ul>
     </div>
@@ -83,15 +77,5 @@
     var all_things_to_do = {{ thingsToDos | json }};
     {% endautoescape %}
 </script>
-<script type="text/javascript">
-    function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(40.7075, -74.0112),
-          zoom: 15
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
-<script src="/javascripts/dropdowns.js"></script>
+<script src="/javascripts/initialize.js"></script>
 {% endblock %}
