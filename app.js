@@ -16,6 +16,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'html');
+app.set('view cache',false);
+swig.setDefaults({cache:false});
 app.engine('html', swig.renderFile);
 
 app.use('/bower_components', express.static(__dirname + '/bower_components'));

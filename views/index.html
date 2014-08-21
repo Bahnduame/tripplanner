@@ -1,16 +1,6 @@
 {% extends "layout.html" %}
 
 {% block content %}
-<script type="text/javascript">
-    function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(40.7075, -74.0112),
-          zoom: 15
-        };
-        var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-    }
-    google.maps.event.addDomListener(window, 'load', initialize);
-</script>
 <div  id="days_row" class="row">
     <div class ="col-lg-3 day-btns">
         <div class="btn-group btn-group-sm">
@@ -87,12 +77,21 @@
     </div>
 </div>
 <script>
-{% autoescape false %}
-var all_hotels = {{ hotels | json }};
-var all_restaurants = {{ restaurants | json }};
-var all_things_to_do = {{ thingsToDos | json }};
-{% endautoescape %}
-
+    {% autoescape false %}
+    var all_hotels = {{ hotels | json }};
+    var all_restaurants = {{ restaurants | json }};
+    var all_things_to_do = {{ thingsToDos | json }};
+    {% endautoescape %}
+</script>
+<script type="text/javascript">
+    function initialize() {
+        var mapOptions = {
+          center: new google.maps.LatLng(40.7075, -74.0112),
+          zoom: 15
+        };
+        var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 <script src="/javascripts/dropdowns.js"></script>
 {% endblock %}
