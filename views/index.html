@@ -4,8 +4,8 @@
 <script type="text/javascript">
     function initialize() {
         var mapOptions = {
-          center: new google.maps.LatLng(-34.397, 150.644),
-          zoom: 8
+          center: new google.maps.LatLng(40.7075, -74.0112),
+          zoom: 15
         };
         var map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
     }
@@ -17,8 +17,8 @@
             <button type="button" class="btn btn-default">Day 1</button>
             <button type="button" class="btn btn-default">Day 2</button>
             <button type="button" class="btn btn-default">Day 3</button>
+            <button type="button" id="add-day-btn" class="btn btn-default">+</button>
         </div>
-        <button type="button" class="btn btn-default btn-sm">+ Add Day</button>
     </div>
     <div class="col-lg-1"></div>
 
@@ -27,17 +27,9 @@
             <h3 class="">Hotels</h3>
         </div>
         <div class="row">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    Paul
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                </ul>
-
-            <button type="button" class="btn btn-primary btn-sm">Primary</button>
-            </div>
+             <select class="form-control col-lg-1 dropdown-selector" id="hotel-dropdown">
+            </select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
         </div>
     </div>
 
@@ -48,17 +40,9 @@
             <h3 class="">Things to do</h3>
         </div>
        <div class="row">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    is a
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                </ul>
-
-            <button type="button" class="btn btn-primary btn-sm">Primary</button>
-            </div>
+            <select class="form-control col-lg-1 dropdown-selector" id="thing-dropdown">
+            </select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
         </div>
     </div>
 
@@ -69,19 +53,12 @@
             <h3 class="">Restaurants</h3>
         </div>
         <div class="row">
-            <div class="dropdown">
-                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
-                    DouchNozzle
-                    <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
-                </ul>
-
-            <button type="button" class="btn btn-primary btn-sm">Add</button>
-            </div>
+            <select class="form-control col-lg-1 dropdown-selector" id="restaurant-dropdown">
+            </select>
+            <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit">Add</button>
         </div>
     </div>
+
 </div>
 
 <div class="row spacer-row"></div>
@@ -116,8 +93,9 @@
 {% autoescape false %}
 var all_hotels = {{ hotels | json }};
 var all_restaurants = {{ restaurants | json }};
-var all_things_to_do = {{ things_to_do | json }};
+var all_things_to_do = {{ thingsToDos | json }};
 {% endautoescape %}
 
 </script>
+<script src="/javascripts/dropdowns.js"></script>
 {% endblock %}

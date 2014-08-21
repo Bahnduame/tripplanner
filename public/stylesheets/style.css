@@ -13,8 +13,7 @@ a {
 }
 
 .map-col{
-    height:600px;
-    max-height: 400px;
+    height:700px;
     max-width: 100%;
 }
 
@@ -22,12 +21,17 @@ a {
     height:15px;
 }
 
-#days_row{
-    width:100%;
-}
-
 .footer-text{
     margin: 20px 0;
     text-align: center;
     font-size: 10px;
+}
+.dropdown-selector{
+    width:68%;
+    height: 30px;
+    margin-right: 2%;
+}
+
+.dropdown-submit{
+    width:30%;
 }
