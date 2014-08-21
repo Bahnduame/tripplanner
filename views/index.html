@@ -1,6 +1,80 @@
 
 
+{% extends "layout.html" %}
 
+{% block content %}
+<div  id="days_row" class="row">
+    <div class ="col-lg-3 day-btns">
+        <div class="btn-group btn-group-sm">
+            <button type="button" class="btn btn-default">Day 1</button>
+            <button type="button" class="btn btn-default">Day 2</button>
+            <button type="button" class="btn btn-default">Day 3</button>
+        </div>
+        <button type="button" class="btn btn-default btn-sm">+ Add Day</button>
+    </div>
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <h3 class="">Hotels</h3>
+        </div>
+        <div class="row">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                </ul>
+
+            <button type="button" class="btn btn-primary btn-sm">Primary</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <h3 class="">Things to do</h3>
+        </div>
+       <div class="row">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                </ul>
+
+            <button type="button" class="btn btn-primary btn-sm">Primary</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-1"></div>
+
+    <div class="col-lg-2">
+        <div class="row">
+            <h3 class="">Restaurants</h3>
+        </div>
+        <div class="row">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle btn-sm" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                    Dropdown
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                </ul>
+
+            <button type="button" class="btn btn-primary btn-sm">Primary</button>
+            </div>
+        </div>
+    </div>
+</div>
 <script>
 
 {% autoescape false %}
@@ -10,3 +84,4 @@ var all_things_to_do = {{ things_to_do | json }};
 {% endautoescape %}
 
 </script>
+{% endblock %}
