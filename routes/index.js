@@ -5,7 +5,7 @@ var models = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res) {
-  models.Hotel.find(function(err, results) {
+  models.Hotel.find({}, function(err, results) {
     res.render('index', { hotels: results, title: "Trip Planner" });
   });
 });

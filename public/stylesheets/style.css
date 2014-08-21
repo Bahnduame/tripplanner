@@ -11,3 +11,23 @@ a {
 .day-btns{
     line-height: 5;
 }
+
+.map-col{
+    height:600px;
+    max-height: 400px;
+    max-width: 100%;
+}
+
+.spacer-row{
+    height:15px;
+}
+
+#days_row{
+    width:100%;
+}
+
+.footer-text{
+    margin: 20px 0;
+    text-align: center;
+    font-size: 10px;
+}
