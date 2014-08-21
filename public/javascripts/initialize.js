@@ -5,13 +5,10 @@ var ourmap;
 function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(40.7075, -74.0112),
-          zoom: 15
+          zoom: 15,
         };
         ourmap = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
 };
-
-
-
 google.maps.event.addDomListener(window, 'load', initialize);
 
 //////////////////////////////////////////////////////////////
@@ -74,6 +71,13 @@ $( "#add-thing" ).click(function() {
         map: ourmap,
         title:$("#thing-select").val()
     });
+        google.maps.event.addListener(marker, 'click',function toggleBounce() {
+          if (marker.getAnimation() != null) {
+            marker.setAnimation(null);
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
+    });
 });
 
 $( "#add-restaurant" ).click(function() {
@@ -92,5 +96,12 @@ $( "#add-restaurant" ).click(function() {
         position: myLatlng,
         map: ourmap,
         title:$("#restaurant-select").val()
+    });
+        google.maps.event.addListener(marker, 'click',function toggleBounce() {
+          if (marker.getAnimation() != null) {
+            marker.setAnimation(null);
+          } else {
+            marker.setAnimation(google.maps.Animation.BOUNCE);
+          }
     });
 });
