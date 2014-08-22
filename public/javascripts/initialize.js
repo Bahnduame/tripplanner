@@ -63,8 +63,8 @@ $( "#add-hotel" ).click(function() {
               } else {
                 marker.setAnimation(google.maps.Animation.BOUNCE);
               }
-              markersArray.push(marker);
         });
+        markersArray.push(marker);
     $("#add-hotel").prop('disabled',true);
 });
 
