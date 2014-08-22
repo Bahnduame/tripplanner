@@ -1,7 +1,14 @@
+// function day(){
+//     this.hotel
+//     this.things: [],
+//     restaurants: [],
+//     markers: []
+// };
 var plan =[],
     activeDay=0;
-plan[0]={};
-$('#day1').addClass('active');
+plan[0]= {};
+// $('#day1').addClass('active');
+
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
@@ -162,12 +169,22 @@ $( "#add-restaurant" ).click(function() {
 ///////////////////////////////////////////////////////////////////////////
 //day buttons
 //////////////////////////////////////////////////////////////////////////
-$( "#day2" ).click(function() {
-    deleteMarkers();
-    $('#hotels-ul').empty();
-    $('#things-ul').empty();
-    $('#restaurants-ul').empty();
-
-    $('#day1').removeClass('active');
-    $('#day2').addClass('active');
+$('#day-btns').children('.btn').each(function(elem) {
+    $(document).on('click',elem, function () {
+        $('#day-btns').children(elem).each(function() {
+            elem.removeClass('active');
+        });
+        elem.addClass('active');
+    });
 });
+
+
+// $( "#day2" ).click(function() {
+//     deleteMarkers();
+//     $('#hotels-ul').empty();
+//     $('#things-ul').empty();
+//     $('#restaurants-ul').empty();
+
+//     $('#day1').removeClass('active');
+//     $('#day2').addClass('active');
+// });
