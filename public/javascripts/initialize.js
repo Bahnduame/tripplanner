@@ -1,3 +1,4 @@
+var plan =[];
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
@@ -35,6 +36,7 @@ $( "#add-hotel" ).click(function() {
         if(all_hotels[i].name == $("#hotel-select").val()){
             lat = all_hotels[i].place[0].location[0];
             lon = all_hotels[i].place[0].location[1];
+            plan[0].hotel=all_hotels[i]._id.toString()
             break;
         }
     }
@@ -61,6 +63,7 @@ $( "#add-thing" ).click(function() {
         if(all_things_to_do[i].name == $("#thing-select").val()){
             lat = all_things_to_do[i].place[0].location[0];
             lon = all_things_to_do[i].place[0].location[1];
+            plan[0].things[plan[0].things.length]=all_things_to_do[i]._id.toString();
             break;
         }
     }
@@ -87,6 +90,7 @@ $( "#add-restaurant" ).click(function() {
         if(all_restaurants[i].name == $("#restaurant-select").val()){
             lat = all_restaurants[i].place[0].location[0];
             lon = all_restaurants[i].place[0].location[1];
+            plan[0].restaurants[plan[0].restaurants.length]=all_restaurants[i]._id.toString();
             break;
         }
     }
