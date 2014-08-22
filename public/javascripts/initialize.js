@@ -7,6 +7,7 @@ $('#day1').addClass('active');
 ////////////////////////////////////////////////////////////
 var map;
 var markersArray = [];
+markersArray.length=0;
 function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(40.7075, -74.0112),
@@ -16,11 +17,31 @@ function initialize() {
 };
 google.maps.event.addDomListener(window, 'load', initialize);
 
-function clearOverlays() {
-  for (var i = 0; i < markersArray.length; i++ ) {
-    markersArray[i].setMap(null);
+// function clearOverlays() {
+//   for (var i = 0; i < markersArray.length; i++ ) {
+//     markersArray[i].setMap(null);
+//   }
+//   markersArray.length = 0;
+// }
+
+function clearMarkers() {
+  setAllMap(null);
+}
+
+function setAllMap(map) {
+  for (var i = 0; i < markersArray.length; i++) {
+    markersArray[i].setMap(map);
   }
-  markersArray.length = 0;
+}
+
+function addMarker(marker) {
+    markersArray.push(marker);
+    marker.setMap(map);
+}
+
+function deleteMarkers() {
+  clearMarkers();
+  markersArray = [];
 }
 
 //////////////////////////////////////////////////////////////
@@ -57,14 +78,14 @@ $( "#add-hotel" ).click(function() {
             map: map,
             title:$("#hotel-select").val()
         });
-        google.maps.event.addListener(marker, 'click',function toggleBounce() {
-              if (marker.getAnimation() != null) {
-                marker.setAnimation(null);
-              } else {
-                marker.setAnimation(google.maps.Animation.BOUNCE);
-              }
-        });
-        markersArray.push(marker);
+        // google.maps.event.addListener(marker, 'click',function toggleBounce() {
+        //       if (marker.getAnimation() != null) {
+        //         marker.setAnimation(null);
+        //       } else {
+        //         marker.setAnimation(google.maps.Animation.BOUNCE);
+        //       }
+        // });
+        addMarker(marker);
     $("#add-hotel").prop('disabled',true);
 });
 
@@ -91,14 +112,14 @@ $( "#add-thing" ).click(function() {
         map: map,
         title:$("#thing-select").val()
     });
-    google.maps.event.addListener(marker, 'click',function toggleBounce() {
-          if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-          } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-          }
-          markersArray.push(marker);
-    });
+    // google.maps.event.addListener(marker, 'click',function toggleBounce() {
+    //       if (marker.getAnimation() != null) {
+    //         marker.setAnimation(null);
+    //       } else {
+    //         marker.setAnimation(google.maps.Animation.BOUNCE);
+    //       }
+    // });
+    addMarker(marker);
 });
 
 $( "#add-restaurant" ).click(function() {
@@ -124,14 +145,15 @@ $( "#add-restaurant" ).click(function() {
         map: map,
         title:$("#restaurant-select").val()
     });
-    google.maps.event.addListener(marker, 'click',function toggleBounce() {
-        if (marker.getAnimation() != null) {
-            marker.setAnimation(null);
-        } else {
-            marker.setAnimation(google.maps.Animation.BOUNCE);
-        }
-        markersArray.push(marker);
-    });
+    // google.maps.event.addListener(marker, 'click',function toggleBounce() {
+    //     if (marker.getAnimation() != null) {
+    //         marker.setAnimation(null);
+    //     } else {
+    //         marker.setAnimation(google.maps.Animation.BOUNCE);
+    //     }
+    // });
+
+    addMarker(marker);
     if(plan[activeDay].restaurants.length === 3){
         $("#add-restaurant").prop('disabled',true);
     }
@@ -141,10 +163,11 @@ $( "#add-restaurant" ).click(function() {
 //day buttons
 //////////////////////////////////////////////////////////////////////////
 $( "#day2" ).click(function() {
-    clearOverlays();
+    deleteMarkers();
     $('#hotels-ul').empty();
     $('#things-ul').empty();
     $('#restaurants-ul').empty();
+
     $('#day1').removeClass('active');
     $('#day2').addClass('active');
 });
