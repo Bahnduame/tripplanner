@@ -1,20 +1,18 @@
-// function day(){
-//     this.hotel
-//     this.things: [],
-//     restaurants: [],
-//     markers: []
-// };
+
 var plan =[],
     activeDay=0;
-plan[0]= {};
-// $('#day1').addClass('active');
-
+function addDay(){
+    plan.push({
+        hotel:[],
+        thingsToDo:[],
+        restaurants:[],
+        markers:[]
+    });
+};
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
 var map;
-var markersArray = [];
-markersArray.length=0;
 function initialize() {
         var mapOptions = {
           center: new google.maps.LatLng(40.7075, -74.0112),
@@ -24,33 +22,26 @@ function initialize() {
 };
 google.maps.event.addDomListener(window, 'load', initialize);
 
-// function clearOverlays() {
-//   for (var i = 0; i < markersArray.length; i++ ) {
-//     markersArray[i].setMap(null);
-//   }
-//   markersArray.length = 0;
-// }
-
 function clearMarkers() {
   setAllMap(null);
 }
 
 function setAllMap(map) {
-  for (var i = 0; i < markersArray.length; i++) {
-    markersArray[i].setMap(map);
+  for (var i = 0; i < plan[activeDay].markers.length; i++) {
+    plan[activeDay].markers[i].setMap(map);
   }
 }
 
 function addMarker(marker) {
-    markersArray.push(marker);
+    plan[activeDay].markers.push(marker);
     marker.setMap(map);
 }
 
-function deleteMarkers() {
-  clearMarkers();
-  markersArray = [];
+function setAllMap(map) {
+      for (var i = 0; i < plan[activeDay].markers.length; i++) {
+        plan[activeDay].markers[i].setMap(map);
+      }
 }
-
 //////////////////////////////////////////////////////////////
 //POPULATE SELECTS
 /////////////////////////////////////////////////////////////
@@ -74,7 +65,7 @@ $( "#add-hotel" ).click(function() {
         if(all_hotels[i].name == $("#hotel-select").val()){
             lat = all_hotels[i].place[0].location[0];
             lon = all_hotels[i].place[0].location[1];
-            plan[activeDay].hotel=all_hotels[i]._id.toString()
+            plan[activeDay].hotel[0]=all_hotels[i];
             break;
         }
     }
@@ -130,7 +121,6 @@ $( "#add-thing" ).click(function() {
 });
 
 $( "#add-restaurant" ).click(function() {
-
     var lat,lon;
     for (var i = all_restaurants.length - 1; i >= 0; i--) {
         if(all_restaurants[i].name == $("#restaurant-select").val()){
@@ -167,24 +157,55 @@ $( "#add-restaurant" ).click(function() {
 });
 
 ///////////////////////////////////////////////////////////////////////////
-//day buttons
-//////////////////////////////////////////////////////////////////////////
-$('#day-btns').children('.btn').each(function(elem) {
-    $(document).on('click',elem, function () {
-        $('#day-btns').children(elem).each(function() {
-            elem.removeClass('active');
+//ADD DAY BTN
+////////////////////////////////////////////////////////////////////////////
+$( "#add-day-btn" ).click(function() {
+    addDay();
+    var count = plan.length;
+    $('#add-day-btn').before("<button type=\"button\" class=\"btn btn-default\">Day "+count+"</button>");
+    $('#add-day-btn').prev().on('click', function () {
+        $('#day-btn-group').children('.btn').each(function(index, elem) {
+            $(elem).removeClass('active');
         });
-        elem.addClass('active');
+        //this may not work
+        //this.addClass('active');
+        //clearMarkers();
+        $('#hotels-ul').empty();
+        $('#things-ul').empty();
+        $('#restaurants-ul').empty();
+        //add existing markers and elems to dom for the active day
+        var hotel = plan[plan.length-1].hotel[0]
+        if(hotel != undefined){
+            $("#hotels-ul").append('<li>'+hotel.name+'</li>');
+            $("#add-hotel").prop('disabled',true);
+        }else{
+            $("#add-hotel").prop('disabled',false);
+        }
+
+        var things = plan[plan.length-1].thingsToDo;
+        if(things != undefined){
+            for(i = 0; i<things.length; i++){
+                $("#things-ul").append('<li>'+things[i].name+'</li>');
+            }
+        }
+
+        var restaurants = plan[plan.length-1].restaurants;
+        if(restaurants != undefined){
+            for(i = 0; i<restaurants.length; i++){
+                $("#things-ul").append('<li>'+restaurants[i].name+'</li>');
+            }
+            if(restaurants.length >= 3){
+                $("#add-restaurant").prop('disabled',true);
+            }else{
+                $("#add-restaurant").prop('disabled',false);
+            }
+        }else{
+            $("#add-restaurant").prop('disabled',false);
+        }
+
+        if(plan[plan.length-1].markers.length > 1){
+            setAllMap();
+        }
+
     });
 });
-
-
-// $( "#day2" ).click(function() {
-//     deleteMarkers();
-//     $('#hotels-ul').empty();
-//     $('#things-ul').empty();
-//     $('#restaurants-ul').empty();
-
-//     $('#day1').removeClass('active');
-//     $('#day2').addClass('active');
-// });
