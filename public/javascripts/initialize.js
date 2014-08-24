@@ -9,6 +9,9 @@ function addDay(){
         markers:[]
     });
 };
+$("#add-hotel").prop('disabled',true);
+$("#add-thing").prop('disabled',true);
+$("#add-restaurant").prop('disabled',true);
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
@@ -26,21 +29,15 @@ function clearMarkers() {
   setAllMap(null);
 }
 
-function setAllMap(map) {
+function setAllMap(mapinput) {
   for (var i = 0; i < plan[activeDay].markers.length; i++) {
-    plan[activeDay].markers[i].setMap(map);
+    plan[activeDay].markers[i].setMap(mapinput);
   }
 }
 
 function addMarker(marker) {
     plan[activeDay].markers.push(marker);
     marker.setMap(map);
-}
-
-function setAllMap(map) {
-      for (var i = 0; i < plan[activeDay].markers.length; i++) {
-        plan[activeDay].markers[i].setMap(map);
-      }
 }
 //////////////////////////////////////////////////////////////
 //POPULATE SELECTS
@@ -94,12 +91,7 @@ $( "#add-thing" ).click(function() {
         if(all_things_to_do[i].name == $("#thing-select").val()){
             lat = all_things_to_do[i].place[0].location[0];
             lon = all_things_to_do[i].place[0].location[1];
-            if(plan[activeDay].things === undefined){
-                plan[activeDay].things=[];
-                plan[activeDay].things[0]=all_things_to_do[i]._id.toString();
-            }else{
-                plan[activeDay].things[plan[activeDay].things.length]=all_things_to_do[i]._id.toString();
-            }
+            plan[activeDay].thingsToDo[plan[activeDay].thingsToDo.length]=all_things_to_do[i];
             break;
         }
     }
@@ -126,12 +118,7 @@ $( "#add-restaurant" ).click(function() {
         if(all_restaurants[i].name == $("#restaurant-select").val()){
             lat = all_restaurants[i].place[0].location[0];
             lon = all_restaurants[i].place[0].location[1];
-            if(plan[activeDay].restaurants === undefined){
-                plan[activeDay].restaurants=[];
-                plan[activeDay].restaurants[0]=all_restaurants[i]._id.toString();
-            }else{
-                plan[activeDay].restaurants[plan[activeDay].restaurants.length || 0]=all_restaurants[i]._id.toString();
-            }
+            plan[activeDay].restaurants[plan[activeDay].restaurants.length]=all_restaurants[i];
             break;
         }
     }
@@ -162,19 +149,22 @@ $( "#add-restaurant" ).click(function() {
 $( "#add-day-btn" ).click(function() {
     addDay();
     var count = plan.length;
-    $('#add-day-btn').before("<button type=\"button\" class=\"btn btn-default\">Day "+count+"</button>");
+
+    $('#add-day-btn').before("<button type=\"button\" class=\"btn btn-default\" id=\""+count+"\"> Day "+count+"</button>");
+
     $('#add-day-btn').prev().on('click', function () {
         $('#day-btn-group').children('.btn').each(function(index, elem) {
             $(elem).removeClass('active');
         });
-        //this may not work
+        clearMarkers();
+        activeDay = this.id-1;
         $(this).addClass('active');
-        //clearMarkers();
         $('#hotels-ul').empty();
         $('#things-ul').empty();
         $('#restaurants-ul').empty();
-        //add existing markers and elems to dom for the active day
-        var hotel = plan[plan.length-1].hotel[0]
+        $("#add-thing").prop('disabled',false);
+
+        var hotel = plan[this.id-1].hotel[0];
         if(hotel != undefined){
             $("#hotels-ul").append('<li>'+hotel.name+'</li>');
             $("#add-hotel").prop('disabled',true);
@@ -182,17 +172,15 @@ $( "#add-day-btn" ).click(function() {
             $("#add-hotel").prop('disabled',false);
         }
 
-        var things = plan[plan.length-1].thingsToDo;
-        if(things != undefined){
-            for(i = 0; i<things.length; i++){
-                $("#things-ul").append('<li>'+things[i].name+'</li>');
-            }
+        var things = plan[this.id-1].thingsToDo;
+        for(i = 0; i<things.length; i++){
+            $("#things-ul").append('<li>'+things[i].name+'</li>');
         }
 
-        var restaurants = plan[plan.length-1].restaurants;
+        var restaurants = plan[this.id-1].restaurants;
         if(restaurants != undefined){
             for(i = 0; i<restaurants.length; i++){
-                $("#things-ul").append('<li>'+restaurants[i].name+'</li>');
+                $("#restaurants-ul").append('<li>'+restaurants[i].name+'</li>');
             }
             if(restaurants.length >= 3){
                 $("#add-restaurant").prop('disabled',true);
@@ -203,8 +191,8 @@ $( "#add-day-btn" ).click(function() {
             $("#add-restaurant").prop('disabled',false);
         }
 
-        if(plan[plan.length-1].markers.length > 1){
-            setAllMap();
+        if(plan[this.id-1].markers.length >= 1){
+            setAllMap(map);
         }
 
     });
