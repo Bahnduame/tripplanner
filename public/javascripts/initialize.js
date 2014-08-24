@@ -168,7 +168,7 @@ $( "#add-day-btn" ).click(function() {
             $(elem).removeClass('active');
         });
         //this may not work
-        //this.addClass('active');
+        $(this).addClass('active');
         //clearMarkers();
         $('#hotels-ul').empty();
         $('#things-ul').empty();
