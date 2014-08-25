@@ -14,7 +14,7 @@
             <h3 class="">Hotels</h3>
         </div>
         <div class="row">
-            <select class="form-control col-lg-1 dropdown-selector" id="hotel-select"></select>
+            <select class="form-control col-lg-1 dropdown-selector" id="hotels-select"></select>
             <button type="button" class="btn btn-primary btn-sm col-lg-1 dropdown-submit" id="add-hotel">Add</button>
         </div>
     </div>
@@ -74,5 +74,6 @@
     var all_things_to_do = {{ thingsToDos | json }};
     {% endautoescape %}
 </script>
+<script src="/javascripts/model.js"></script>
 <script src="/javascripts/initialize.js"></script>
 {% endblock %}

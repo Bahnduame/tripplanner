@@ -1,48 +1,16 @@
-var plan =[],
-    activeDay=0;
-function addDay(){
-    plan.push({
-        hotel:[],
-        thingsToDo:[],
-        restaurants:[],
-        markers:[]
-    });
-};
 $("#add-hotel").prop('disabled',true);
 $("#add-thing").prop('disabled',true);
 $("#add-restaurant").prop('disabled',true);
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
-var map;
-function initialize() {
-        var mapOptions = {
-          center: new google.maps.LatLng(40.7075, -74.0112),
-          zoom: 15,
-        };
-        map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-};
 google.maps.event.addDomListener(window, 'load', initialize);
 
-function clearMarkers() {
-  setAllMap(null);
-}
-
-function setAllMap(mapinput) {
-  for (var i = 0; i < plan[activeDay].markers.length; i++) {
-    plan[activeDay].markers[i].setMap(mapinput);
-  }
-}
-
-function addMarker(marker) {
-    plan[activeDay].markers.push(marker);
-    marker.setMap(map);
-}
 //////////////////////////////////////////////////////////////
 //POPULATE SELECTS
 /////////////////////////////////////////////////////////////
 for(key in all_hotels){
-    $("#hotel-select").append("<option>"+all_hotels[key]["name"]+"</option>");
+    $("#hotels-select").append("<option>"+all_hotels[key]["name"]+"</option>");
 }
 for(key in all_things_to_do){
     $("#thing-select").append("<option>"+all_things_to_do[key]["name"]+"</option>");
@@ -56,73 +24,24 @@ for(key in all_restaurants){
 //ADD TO PLAN BTNS
 ///////////////////////////////////////////////////////////////
 $( "#add-hotel" ).click(function() {
-    var lat,lon;
-    for (var i = all_hotels.length - 1; i >= 0; i--) {
-        if(all_hotels[i].name == $("#hotel-select").val()){
-            lat = all_hotels[i].place[0].location[0];
-            lon = all_hotels[i].place[0].location[1];
-            plan[activeDay].hotel[0]=all_hotels[i];
-            break;
-        }
-    }
-        $("#hotels-ul").append('<li>'+$("#hotel-select").val()+'</li>');
-        var myLatlng = new google.maps.LatLng(lat, lon);
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            title:$("#hotel-select").val()
-        });
-        // google.maps.event.addListener(marker, 'click',function toggleBounce() {
-        //       if (marker.getAnimation() != null) {
-        //         marker.setAnimation(null);
-        //       } else {
-        //         marker.setAnimation(google.maps.Animation.BOUNCE);
-        //       }
-        // });
-        addMarker(marker);
+    var title = $("#hotels-select").val();
+    addPlace(title, all_hotels, 'hotel');
+    $("#hotels-ul").append('<li>'+title+'</li>');
     $("#add-hotel").prop('disabled',true);
 });
 
 $( "#add-thing" ).click(function() {
-    $("#things-ul").append('<li>'+$("#thing-select").val()+'</li>');
-    var lat,lon;
-    for (var i = all_things_to_do.length - 1; i >= 0; i--) {
-        if(all_things_to_do[i].name == $("#thing-select").val()){
-            lat = all_things_to_do[i].place[0].location[0];
-            lon = all_things_to_do[i].place[0].location[1];
-            plan[activeDay].thingsToDo[plan[activeDay].thingsToDo.length]=all_things_to_do[i];
-            break;
-        }
-    }
-    var myLatlng = new google.maps.LatLng(lat, lon);
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:$("#thing-select").val()
-    });
-    addMarker(marker);
+    var title = $("#thing-select").val();
+    addPlace(title, all_things_to_do, 'thing');
+    $("#things-ul").append('<li>'+title+'</li>');
 });
 
 $( "#add-restaurant" ).click(function() {
-    var lat,lon;
-    for (var i = all_restaurants.length - 1; i >= 0; i--) {
-        if(all_restaurants[i].name == $("#restaurant-select").val()){
-            lat = all_restaurants[i].place[0].location[0];
-            lon = all_restaurants[i].place[0].location[1];
-            plan[activeDay].restaurants[plan[activeDay].restaurants.length]=all_restaurants[i];
-            break;
-        }
-    }
-    $("#restaurants-ul").append('<li>'+$("#restaurant-select").val()+'</li>');
-    var myLatlng = new google.maps.LatLng(lat, lon);
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-        title:$("#restaurant-select").val()
-    });
-    addMarker(marker);
+    var title = $("#restaurant-select").val();
+    addPlace(title, all_restaurants, 'restaurant');
+    $("#restaurants-ul").append('<li>'+title+'</li>');
     if(plan[activeDay].restaurants.length === 3){
-        $("#add-restaurant").prop('disabled',true);
+            $("#add-restaurant").prop('disabled',true);
     }
 });
 
