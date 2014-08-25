@@ -15,19 +15,20 @@ function clearMarkers() {
 }
 
 function setAllMap(mapinput) {
-  for (var i = 0; i < plan[activeDay].markers.length; i++) {
-    plan[activeDay].markers[i].setMap(mapinput);
+  for (var i = 0; i < plan.days[plan.activeDay].markers.length; i++) {
+    plan.days[plan.activeDay].markers[i].setMap(mapinput);
   }
 }
 
 function addMarker(marker) {
-    plan[activeDay].markers.push(marker);
+    plan.days[plan.activeDay].markers.push(marker);
     marker.setMap(map);
 }
 
 ////////////////////////////////////////////////////////////////////////
 //Plan and day data
 //////////////////////////////////////////////////////////////////////
+
 var plan =[],
     activeDay=0;
 
@@ -47,11 +48,13 @@ function addDay(){
     plan.push(curDay);
 }
 
+
 function addPlace(title, from, type){
     for (var i = from.length - 1; i >= 0; i--) {
         if(from[i].name == title){
             var lat = from[i].place[0].location[0];
             var lon = from[i].place[0].location[1];
+            plan.days[plan.activeDay][type].push(from[i]);
             break;
         }
     }
@@ -62,6 +65,28 @@ function addPlace(title, from, type){
     });
     addMarker(marker);
 }
+
+function Days(){
+    this.days=[];
+    this.activeDay = 0;
+}
+
+Days.prototype.addDay = function() {
+    curDay = new Day();
+    this.days.push(curDay);
+};
+
+
+var Day = function() {
+    this.hotel = [];
+    this.thingsToDo = [];
+    this.restaurants = [];
+    this.markers = [];
+};
+
+Day.prototype.addActivity = function(type, id) {
+    this[type].push(findbyId(type, id));
+};
 
 var findbyId = function(type, id){
     if(type == 'hotel'){
