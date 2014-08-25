@@ -1,4 +1,3 @@
-
 var plan =[],
     activeDay=0;
 function addDay(){
@@ -95,20 +94,12 @@ $( "#add-thing" ).click(function() {
             break;
         }
     }
-
     var myLatlng = new google.maps.LatLng(lat, lon);
     var marker = new google.maps.Marker({
         position: myLatlng,
         map: map,
         title:$("#thing-select").val()
     });
-    // google.maps.event.addListener(marker, 'click',function toggleBounce() {
-    //       if (marker.getAnimation() != null) {
-    //         marker.setAnimation(null);
-    //       } else {
-    //         marker.setAnimation(google.maps.Animation.BOUNCE);
-    //       }
-    // });
     addMarker(marker);
 });
 
@@ -129,14 +120,6 @@ $( "#add-restaurant" ).click(function() {
         map: map,
         title:$("#restaurant-select").val()
     });
-    // google.maps.event.addListener(marker, 'click',function toggleBounce() {
-    //     if (marker.getAnimation() != null) {
-    //         marker.setAnimation(null);
-    //     } else {
-    //         marker.setAnimation(google.maps.Animation.BOUNCE);
-    //     }
-    // });
-
     addMarker(marker);
     if(plan[activeDay].restaurants.length === 3){
         $("#add-restaurant").prop('disabled',true);
