@@ -8,7 +8,7 @@ function initialize() {
           zoom: 15,
         };
         map = new google.maps.Map(document.getElementById("map-canvas"),mapOptions);
-};
+}
 
 function clearMarkers() {
   setAllMap(null);
@@ -45,7 +45,7 @@ Day.prototype.addActivity = function(type, id) {
 function addDay(){
     curDay = new Day();
     plan.push(curDay);
-};
+}
 
 function addPlace(title, from, type){
     for (var i = from.length - 1; i >= 0; i--) {
@@ -69,14 +69,14 @@ var findbyId = function(type, id){
     }else if(type == 'thingsToDo'){
         activities = all_things_to_do;
     }else if(type == 'restaurants'){
-        activities = all_restaurants
+        activities = all_restaurants;
     }
     for (var i = activities.length - 1; i >= 0; i--) {
         if(activites[i].id == id){
             return activities[i];
         }
     }
-}
+};
 
 // day view class
 // days class

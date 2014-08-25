@@ -1,6 +1,7 @@
 $("#add-hotel").prop('disabled',true);
 $("#add-thing").prop('disabled',true);
 $("#add-restaurant").prop('disabled',true);
+
 //////////////////////////////////////////////////////////////
 //INITIALIZE THE MAP
 ////////////////////////////////////////////////////////////
@@ -9,17 +10,31 @@ google.maps.event.addDomListener(window, 'load', initialize);
 //////////////////////////////////////////////////////////////
 //POPULATE SELECTS
 /////////////////////////////////////////////////////////////
-for(key in all_hotels){
-    $("#hotels-select").append("<option>"+all_hotels[key]["name"]+"</option>");
-}
-for(key in all_things_to_do){
-    $("#thing-select").append("<option>"+all_things_to_do[key]["name"]+"</option>");
-}
-for(key in all_restaurants){
-    $("#restaurant-select").append("<option>"+all_restaurants[key]["name"]+"</option>");
-}
+var Activities = function () {
 
+};
 
+Activities.populate = function (array, element) {
+    for( var key in array){
+        $(element).append("<option>"+array[key].name+"</option>");
+    }
+};
+
+Activities.populate(all_hotels, "#hotels-select");
+Activities.populate(all_things_to_do, "#thing-select");
+Activities.populate(all_restaurants, "#restaurant-select");
+
+// for( key in all_hotels){
+//     $("#hotels-select").append("<option>"+all_hotels[key]["name"]+"</option>");
+// }
+// for(key in all_things_to_do){
+//     $("#thing-select").append("<option>"+all_things_to_do[key]["name"]+"</option>");
+// }
+// for(key in all_restaurants){
+//     $("#restaurant-select").append("<option>"+all_restaurants[key]["name"]+"</option>");
+// }
+
+// debugger;
 ///////////////////////////////////////////////////////////////
 //ADD TO PLAN BTNS
 ///////////////////////////////////////////////////////////////
@@ -67,7 +82,7 @@ $( "#add-day-btn" ).click(function() {
         $("#add-thing").prop('disabled',false);
 
         var hotel = plan[this.id-1].hotel[0];
-        if(hotel != undefined){
+        if (hotel !== undefined) {
             $("#hotels-ul").append('<li>'+hotel.name+'</li>');
             $("#add-hotel").prop('disabled',true);
         }else{
@@ -80,7 +95,7 @@ $( "#add-day-btn" ).click(function() {
         }
 
         var restaurants = plan[this.id-1].restaurants;
-        if(restaurants != undefined){
+        if(restaurants !== undefined){
             for(i = 0; i<restaurants.length; i++){
                 $("#restaurants-ul").append('<li>'+restaurants[i].name+'</li>');
             }
