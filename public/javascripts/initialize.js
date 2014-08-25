@@ -32,13 +32,13 @@ $( "#add-hotel" ).click(function() {
 
 $( "#add-thing" ).click(function() {
     var title = $("#thing-select").val();
-    addPlace(title, all_things_to_do, 'thing');
+    addPlace(title, all_things_to_do, 'thingsToDo');
     $("#things-ul").append('<li>'+title+'</li>');
 });
 
 $( "#add-restaurant" ).click(function() {
     var title = $("#restaurant-select").val();
-    addPlace(title, all_restaurants, 'restaurant');
+    addPlace(title, all_restaurants, 'restaurants');
     $("#restaurants-ul").append('<li>'+title+'</li>');
     if(plan[activeDay].restaurants.length === 3){
             $("#add-restaurant").prop('disabled',true);
