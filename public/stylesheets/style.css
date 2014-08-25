@@ -34,13 +34,13 @@ a {
 
 
 .dropdown-selector{
-    width:68%;
+    /*width:68%;*/
     height: 30px;
-    margin-right: 2%;
+    /*margin-right: 2%;*/
 }
 
 .dropdown-submit{
-    width:30%;
+    /*width:30%;*/
 }
 
 .container {
@@ -50,6 +50,13 @@ a {
 
 }
 
+.form-control {
+  display: inline-block;
+  width:40%;
+
+}
+
+
 .well {
-  
+
 }
