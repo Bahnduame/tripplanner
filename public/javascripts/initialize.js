@@ -40,7 +40,7 @@ $( "#add-restaurant" ).click(function() {
     var title = $("#restaurant-select").val();
     addPlace(title, all_restaurants, 'restaurants');
     $("#restaurants-ul").append('<li>'+title+'</li>');
-    if(plan[activeDay].restaurants.length === 3){
+    if(plan.days[plan.activeDay].restaurants.length === 3){
             $("#add-restaurant").prop('disabled',true);
     }
 });
@@ -49,8 +49,8 @@ $( "#add-restaurant" ).click(function() {
 //ADD DAY BTN
 ////////////////////////////////////////////////////////////////////////////
 $( "#add-day-btn" ).click(function() {
-    addDay();
-    var count = plan.length;
+    plan.addDay();
+    var count = plan.days.length;
 
     $('#add-day-btn').before("<button type=\"button\" class=\"btn btn-default\" id=\""+count+"\"> Day "+count+"</button>");
 
@@ -59,14 +59,15 @@ $( "#add-day-btn" ).click(function() {
             $(elem).removeClass('active');
         });
         clearMarkers();
-        activeDay = this.id-1;
+        plan.activeDay = this.id-1;
+        $("#itenerary-title").html("Plan for Day "+parseInt(plan.activeDay+1));
         $(this).addClass('active');
         $('#hotels-ul').empty();
         $('#things-ul').empty();
         $('#restaurants-ul').empty();
         $("#add-thing").prop('disabled',false);
 
-        var hotel = plan[this.id-1].hotel[0];
+        var hotel = plan.days[this.id-1].hotel[0];
         if(hotel != undefined){
             $("#hotels-ul").append('<li>'+hotel.name+'</li>');
             $("#add-hotel").prop('disabled',true);
@@ -74,12 +75,12 @@ $( "#add-day-btn" ).click(function() {
             $("#add-hotel").prop('disabled',false);
         }
 
-        var things = plan[this.id-1].thingsToDo;
+        var things = plan.days[this.id-1].thingsToDo;
         for(i = 0; i<things.length; i++){
             $("#things-ul").append('<li>'+things[i].name+'</li>');
         }
 
-        var restaurants = plan[this.id-1].restaurants;
+        var restaurants = plan.days[this.id-1].restaurants;
         if(restaurants != undefined){
             for(i = 0; i<restaurants.length; i++){
                 $("#restaurants-ul").append('<li>'+restaurants[i].name+'</li>');
@@ -93,7 +94,7 @@ $( "#add-day-btn" ).click(function() {
             $("#add-restaurant").prop('disabled',false);
         }
 
-        if(plan[this.id-1].markers.length >= 1){
+        if(plan.days[this.id-1].markers.length >= 1){
             setAllMap(map);
         }
 

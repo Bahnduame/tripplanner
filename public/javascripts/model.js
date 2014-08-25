@@ -15,21 +15,48 @@ function clearMarkers() {
 }
 
 function setAllMap(mapinput) {
-  for (var i = 0; i < plan[activeDay].markers.length; i++) {
-    plan[activeDay].markers[i].setMap(mapinput);
+  for (var i = 0; i < plan.days[plan.activeDay].markers.length; i++) {
+    plan.days[plan.activeDay].markers[i].setMap(mapinput);
   }
 }
 
 function addMarker(marker) {
-    plan[activeDay].markers.push(marker);
+    plan.days[plan.activeDay].markers.push(marker);
     marker.setMap(map);
 }
 
 ////////////////////////////////////////////////////////////////////////
 //Plan and day data
 //////////////////////////////////////////////////////////////////////
-var plan =[],
-    activeDay=0;
+var plan = new Days();
+
+function addPlace(title, from, type){
+    for (var i = from.length - 1; i >= 0; i--) {
+        if(from[i].name == title){
+            var lat = from[i].place[0].location[0];
+            var lon = from[i].place[0].location[1];
+            plan.days[plan.activeDay][type].push(from[i]);
+            break;
+        }
+    }
+    var myLatlng = new google.maps.LatLng(lat, lon);
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+    });
+    addMarker(marker);
+}
+
+function Days(){
+    this.days=[];
+    this.activeDay = 0;
+}
+
+Days.prototype.addDay = function() {
+    curDay = new Day();
+    this.days.push(curDay);
+};
+
 
 var Day = function() {
     this.hotel = [];
@@ -41,27 +68,6 @@ var Day = function() {
 Day.prototype.addActivity = function(type, id) {
     this[type].push(findbyId(type, id));
 };
-
-function addDay(){
-    curDay = new Day();
-    plan.push(curDay);
-};
-
-function addPlace(title, from, type){
-    for (var i = from.length - 1; i >= 0; i--) {
-        if(from[i].name == title){
-            var lat = from[i].place[0].location[0];
-            var lon = from[i].place[0].location[1];
-            break;
-        }
-    }
-    var myLatlng = new google.maps.LatLng(lat, lon);
-    var marker = new google.maps.Marker({
-        position: myLatlng,
-        map: map,
-    });
-    addMarker(marker);
-}
 
 var findbyId = function(type, id){
     if(type == 'hotel'){
