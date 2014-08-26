@@ -29,8 +29,18 @@ function addMarker(marker) {
 //Plan and day data
 //////////////////////////////////////////////////////////////////////
 
-var plan =[],
-    activeDay=0;
+var plan =new Days();
+
+function Days(){
+    this.days=[];
+    this.activeDay = 0;
+}
+
+Days.prototype.addDay = function() {
+    var newDay = new Day()
+    this.days.push( newDay);
+    return newDay;
+};
 
 var Day = function() {
     this.hotel = [];
@@ -42,12 +52,6 @@ var Day = function() {
 Day.prototype.addActivity = function(type, id) {
     this[type].push(findbyId(type, id));
 };
-
-function addDay(){
-    curDay = new Day();
-    plan.push(curDay);
-}
-
 
 function addPlace(title, from, type){
     for (var i = from.length - 1; i >= 0; i--) {
@@ -66,28 +70,6 @@ function addPlace(title, from, type){
     addMarker(marker);
 }
 
-function Days(){
-    this.days=[];
-    this.activeDay = 0;
-}
-
-Days.prototype.addDay = function() {
-    curDay = new Day();
-    this.days.push(curDay);
-};
-
-
-var Day = function() {
-    this.hotel = [];
-    this.thingsToDo = [];
-    this.restaurants = [];
-    this.markers = [];
-};
-
-Day.prototype.addActivity = function(type, id) {
-    this[type].push(findbyId(type, id));
-};
-
 var findbyId = function(type, id){
     if(type == 'hotel'){
         activities = all_hotels;
@@ -103,7 +85,89 @@ var findbyId = function(type, id){
     }
 };
 
-// day view class
-// days class
-// activities view class
-// function appendToPlan
+///////////////////////\||\\\\\//////////////////\\/\\\\|||||/////////
+////////////////////////////////////////////////////////////////////////|\\\
+
+// var days = [];
+// var Day = function() {
+//     this.dayNum=days.length+1;
+//     this.hotel = [];
+//     this.thingsToDo = [];
+//     this.restaurants = [];
+//     this.markers = [];
+//     this.dayView = new DayView(this);
+//     this.dayBtnView = new DayBtnView(this);
+// };
+
+// Day.prototype.addActivity = function(type, id) {
+//     this[type].push(findbyId(type, id));
+// };
+
+// var DayView = function(day){
+//     this.day = day;
+//     this.$el=$(this.render());
+//     this.$hotelContainer = this.$el.find('.hotelContainer');
+//     this.$thingsToDoContainer = this.$el.find('.thingsToDoContainer');
+//     this.$restaurantsContainer = this.$el.find('.restaurantsContainer');
+// }
+
+// DayView.prototype.render = function(){
+//     return "<div>"+
+//                 "<h2>Day "+this.day.dayNum+"</h2>"+
+//                 "<p>Hotels</p>"+
+//                 "<div class='hotelContainer'></div>"+
+//                 "<p>Things to Do</p>"+
+//                 "<div class='thingsToDoContainer'></div>"+
+//                 "<p>Restaurants</p>"+
+//                 "<div class='restaurantsContainer'></div>"+
+//             "</div>";
+// };
+
+// function Days(){
+//     this.days=[];
+//     this.activeDay = 0;
+// }
+
+// Days.prototype.addDay = function() {
+//     var newDay = new Day()
+//     this.days.push( newDay);
+//     return newDay;
+// };
+
+// DayBtnView = function(day){
+//     this.day= day;
+//     this.$el=$(this.render());
+//     //todo add click listener
+// }
+
+// DayBtnView.prototype.render = function() {
+//     return "<button class='btn'>"+this.day.dayNum+"</button>"
+// };
+// var DaysView = function(){
+//     this.$el=$(this.render());
+//     this.$addDay = this.$el.find('.addDay');
+//     this.$daysBtnContainer = this.$el.find('.daysBtnContainer');
+//     this.$dayBtnContainer = this.$el
+
+//     var self = this;
+
+//     this.$addDay.on('click',function(){
+//         var newDay = plan.addDay();
+//         self.$daysBtnContainer.append(newDay.dayBtnView.$el);
+//     })
+// }
+
+// DaysView.prototype.render = function() {
+//     return "<div>"+
+//                 "<div class ='daysBtnContainer'></div>"+
+//                 "<button class='btn addDay'></button>"+
+//             "</div>";
+// }
+
+// var Activity = function(){
+
+// }
+
+// var ActivityView = function(){
+
+// }
