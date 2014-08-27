@@ -26,7 +26,7 @@
     <!-- <div class="col-lg-1"></div> -->
 
 
-    <div class="col-lg-3 col-md-3"> 
+    <div class="col-lg-3 col-md-3">
 
             <h3 class="">Things to do</h3>
             <select class="form-control dropdown-selector" id="thing-select"></select>
@@ -70,6 +70,7 @@
     var all_hotels = {{ hotels | json }};
     var all_restaurants = {{ restaurants | json }};
     var all_things_to_do = {{ thingsToDos | json }};
+    var all_days = {{ dayPlans | json }};
     {% endautoescape %}
 </script>
 <script src="/javascripts/model.js"></script>

@@ -7,12 +7,12 @@ router.get('/', function(req, res) {
     models.Hotel.find(function(err, hotels) {
         models.Restaurant.find(function(err, restaurants) {
             models.ThingsToDo.find(function(err, thingsToDos) {
-                models.DayPlan.find(function(err, dayPlan){
+                models.DayPlan.find().populate("hotels restaurants thingtodo").exec(function(err, dayPlan){
                     res.render('index', {
                         hotels: hotels,
                         restaurants: restaurants,
                         thingsToDos: thingsToDos,
-                        dayPlan: dayPlan,
+                        dayPlans: dayPlan,
                         title: "Trip Planner"
                     });
                 });

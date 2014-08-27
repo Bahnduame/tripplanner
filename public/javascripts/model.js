@@ -15,6 +15,7 @@ function clearMarkers() {
 }
 
 function setAllMap(mapinput) {
+    // debugger;
   for (var i = 0; i < plan.days[plan.activeDay].markers.length; i++) {
     plan.days[plan.activeDay].markers[i].setMap(mapinput);
   }
@@ -29,36 +30,42 @@ function addMarker(marker) {
 //Plan and day data
 //////////////////////////////////////////////////////////////////////
 
-var plan =new Days();
+var plan = new Days();
 
 function Days(){
     this.days=[];
     this.activeDay = 0;
 }
 
-Days.prototype.addDay = function() {
-    var newDay = new Day()
+Days.prototype.addDay = function(){
+    var newDay = new Day();
     this.days.push( newDay);
     return newDay;
 };
 
-var Day = function() {
+var Day = function(){
+    this.objID;
+    this.dayNum;
     this.hotel = [];
     this.thingsToDo = [];
     this.restaurants = [];
     this.markers = [];
 };
 
-Day.prototype.addActivity = function(type, id) {
+Day.prototype.addActivity = function(type, id){
     this[type].push(findbyId(type, id));
 };
 
 function addPlace(title, from, type){
+    // debugger;
     for (var i = from.length - 1; i >= 0; i--) {
         if(from[i].name == title){
             var lat = from[i].place[0].location[0];
             var lon = from[i].place[0].location[1];
+            var id=from[i]._id.toString();
+        //    debugger;
             plan.days[plan.activeDay][type].push(from[i]);
+  //                      debugger;
             break;
         }
     }
@@ -67,7 +74,24 @@ function addPlace(title, from, type){
         position: myLatlng,
         map: map,
     });
-    addMarker(marker);
+  addMarker(marker);
+  return id;
+}
+
+function pushMarker(title, from, dayNum){
+    for (var i = from.length - 1; i >= 0; i--) {
+        if(from[i].name == title){
+            var lat = from[i].place[0].location[0];
+            var lon = from[i].place[0].location[1];
+            break;
+        }
+    }
+    var myLatlng = new google.maps.LatLng(lat, lon);
+    var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+    });
+   plan.days[dayNum].markers.push(marker);
 }
 
 var findbyId = function(type, id){
@@ -79,7 +103,7 @@ var findbyId = function(type, id){
         activities = all_restaurants;
     }
     for (var i = activities.length - 1; i >= 0; i--) {
-        if(activites[i].id == id){
+        if(activities[i].id == id){
             return activities[i];
         }
     }
